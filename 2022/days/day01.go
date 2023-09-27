@@ -11,7 +11,7 @@ import (
 
 
 func readCalories() []int {
-  readFile, err := os.Open("./inputs/input.txt")
+  readFile, err := os.Open("./inputs/input01.txt")
   
   if err != nil {
     fmt.Println(err)
