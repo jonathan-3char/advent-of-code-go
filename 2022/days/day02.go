@@ -4,8 +4,22 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"strings"
 )
+
+const (
+  _rock = 1
+  _paper = 2
+  _scissors = 3
+  _win = 6
+  _draw = 3
+)
+
+var _pointsMap = map[string]int{
+  "A": _rock,
+  "B": _paper,
+  "C": _scissors,
+}
+
 
 func computePoints() {
   readFile, err := os.Open("./inputs/input02.txt")
@@ -15,8 +29,7 @@ func computePoints() {
     fmt.Println(err)
   }
 
-  fileScanner := bufio.NewScanner(readFile)
-  fileScanner.Split(bufio.ScanLines)
+  fileReader := bufio.NewReader(readFile)
   totalPoints := 0
 
   movesMap := map[string]string{
@@ -25,44 +38,98 @@ func computePoints() {
     "Z": "C",
   }
 
-  pointsMap := map[string]int{
-    "A": 1,
-    "B": 2,
-    "C": 3,
-  }
 
 
-  for fileScanner.Scan() {
-    line := strings.Split(fileScanner.Text(), " ")
-   
-    if len(line) == 1 {
+  for {
+    var oppMove, ourMove string
+    _, err := fmt.Fscanf(fileReader, "%v %v\n", &oppMove, &ourMove)
+
+    // break when EOF is reached
+    if err != nil {
       break
     }
-
+    
+    ourMove = movesMap[ourMove]
+    
     // determine how many points to give based on match result
-    // tie: 3, win: 6, lose: 0
-    if ourMove := movesMap[line[1]]; ourMove == line[0] {
-      totalPoints += 3
-    } else if (ourMove == "A" && line[0] == "C") ||
-    (ourMove == "B" && line[0] == "A") || (ourMove == "C" && line[0] == "B") {
-      totalPoints += 6
+    // draw: 3, win: 6, lose: 0
+    if  ourMove == oppMove {
+      totalPoints += _draw
+    } else if (ourMove == "A" && oppMove == "C") ||
+    (ourMove == "B" && oppMove == "A") || (ourMove == "C" && oppMove == "B") {
+      totalPoints += _win
     }
 
     // give points for the shape selected
     // rock: 1, paper: 2, scissors: 3
-    totalPoints += pointsMap[movesMap[line[1]]]
+    totalPoints += _pointsMap[ourMove]
   }
 
   fmt.Printf("using the strategy guide will give a total of %d points.\n", 
   totalPoints)
 }
 
+func correctComputePoints() {
+  readFile, err := os.Open("./inputs/input02.txt") 
+  defer readFile.Close()
+
+  if err != nil {
+    fmt.Println(err)
+  }
+
+  fileReader := bufio.NewReader(readFile)
+  totalPoints := 0
+
+  for {
+    var oppMove, wantResult string
+    _, err := fmt.Fscanf(fileReader, "%v %v\n", &oppMove, &wantResult)
+
+    if err != nil {
+      break
+    }
+
+    totalPoints += computeMatch(oppMove, wantResult)
+
+  }
+
+  fmt.Printf("total points for part2 are %d.\n", totalPoints)
+}
+
+func computeMatch(oppMove, result string) int {
+  winMap := map[string]int{
+    "A": _paper,
+    "B": _scissors,
+    "C": _rock,
+  }
+
+  loseMap := map[string]int{
+    "A": _scissors,
+    "B": _rock,
+    "C": _paper,
+  }
+
+
+  switch result {
+  case "X":
+    return loseMap[oppMove]
+  case "Y":
+    return _pointsMap[oppMove] + _draw
+  case "Z":
+    return winMap[oppMove] + _win
+  default:
+    fmt.Println("invalid oppMove provided.")
+    return -1
+  }
+
+}
+
+
 func Day02(part string) {
   switch part {
   case "1":
     computePoints() 
   case "2":
-    fmt.Println("not done yet...")
+    correctComputePoints()
   default:
     fmt.Println("invalid part provided.")
   }
