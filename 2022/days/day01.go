@@ -3,6 +3,7 @@ package days
 import (
 	"bufio"
 	"fmt"
+	"log"
 	"os"
 	"strconv"
 
@@ -14,7 +15,7 @@ func readCalories() []int {
   readFile, err := os.Open("./inputs/input01.txt")
   
   if err != nil {
-    fmt.Println(err)
+    log.Fatal(err)
   }
 
   defer readFile.Close()
@@ -46,31 +47,20 @@ func readCalories() []int {
   return elves
 }
 
-func highestCalories() {
-  highestCalories := readCalories()[0]
-
-  fmt.Printf(
-    "the elf carrying the most calories has a total of %d calories.\n",
-    highestCalories)
-}
-
-func topThreeHighestCalories() {
-  topThreeCalories := readCalories()[:3]
-  total := 0
-
-  for _, calories := range topThreeCalories {
-    total += calories
-  }
-
-  fmt.Printf("the top three elves carrying the most calories have a combined total of %d calories\n.", total) 
-}
-
 func Day01(part string) {
   switch part {
   case "1":
-    highestCalories()
+    result := readCalories()[0]
+    fmt.Printf("the elf carrying the most calories has a toral of %d calories.\n", result)
   case "2":
-    topThreeHighestCalories()
+    result := readCalories()[:3]
+    total := 0
+
+    for _, calories := range result {
+      total += calories
+    }
+
+    fmt.Printf("the top three elves carrying the most calories have a combined total of %d calories.\n", total)
   default:
     fmt.Println("invalid part provided.")
   }

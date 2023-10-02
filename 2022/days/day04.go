@@ -3,6 +3,7 @@ package days
 import (
 	"bufio"
 	"fmt"
+	"log"
 	"os"
 )
 
@@ -11,7 +12,7 @@ func countFullyContain() {
   defer file.Close()
 
   if err != nil {
-    fmt.Println(err)
+    log.Fatal(err)
   }
   
   fileReader := bufio.NewReader(file)
@@ -41,7 +42,7 @@ func countOverlap() {
   defer file.Close()
 
   if err != nil {
-    fmt.Println(err)
+    log.Fatal(err)
   }
 
   fileReader := bufio.NewReader(file)

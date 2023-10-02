@@ -3,6 +3,7 @@ package days
 import (
 	"bufio"
 	"fmt"
+	"log"
 	"os"
 )
 
@@ -26,7 +27,7 @@ func computePoints() {
   defer readFile.Close()
 
   if err != nil {
-    fmt.Println(err)
+    log.Fatal(err)
   }
 
   fileReader := bufio.NewReader(readFile)
@@ -74,7 +75,7 @@ func correctComputePoints() {
   defer readFile.Close()
 
   if err != nil {
-    fmt.Println(err)
+    log.Fatal(err)
   }
 
   fileReader := bufio.NewReader(readFile)

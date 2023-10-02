@@ -3,6 +3,7 @@ package days
 import (
 	"bufio"
 	"fmt"
+	"log"
 	"os"
 )
 
@@ -19,7 +20,7 @@ func sumCompartments() {
   defer file.Close()
 
   if err != nil {
-    fmt.Println(err)
+      log.Fatal(err)
   }
 
   fileReader := bufio.NewReader(file)
@@ -59,7 +60,7 @@ func sumGroupsOfThree() {
   defer file.Close() 
 
   if err != nil {
-    fmt.Println(err)
+    log.Fatal(err)
   }
   
   totalPriorities := 0
