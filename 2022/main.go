@@ -33,6 +33,8 @@ func main() {
     days.Day02(part)
   case "3":
     days.Day03(part)
+  case "4":
+    days.Day04(part)
   default:
     fmt.Println("invalid day provided.")
   }
