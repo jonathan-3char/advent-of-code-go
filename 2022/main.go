@@ -1,42 +1,44 @@
 package main
 
 import (
-	"fmt"
-	"log"
+    "fmt"
+    "log"
 
-	"github.com/jonathan-3char/advent-of-code/2022/days"
+    "github.com/jonathan-3char/advent-of-code/2022/days"
 )
 
 func main() {
-  fmt.Print("input day: ")
+    fmt.Print("input day: ")
 
-  var day, part string
-  _, err := fmt.Scan(&day)
+    var day, part string
+    _, err := fmt.Scan(&day)
 
-  if err != nil {
-    log.Fatal(err)
-  }
+    if err != nil {
+        log.Fatal(err)
+    }
 
-  fmt.Print("input part: ")
+    fmt.Print("input part: ")
 
 
-  _, err = fmt.Scan(&part)
+    _, err = fmt.Scan(&part)
 
-  if err != nil {
-    log.Fatal(err)
-  }
-  
-  switch day {
-  case "1":
-    days.Day01(part)
-  case "2":
-    days.Day02(part)
-  case "3":
-    days.Day03(part)
-  case "4":
-    days.Day04(part)
-  default:
-    fmt.Println("invalid day provided.")
-  }
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    switch day {
+    case "1":
+        days.Day01(part)
+    case "2":
+        days.Day02(part)
+    case "3":
+        days.Day03(part)
+    case "4":
+        days.Day04(part)
+    case "5":
+        days.Day05(part)
+    default:
+        fmt.Println("invalid day provided.")
+    }
 
 }
